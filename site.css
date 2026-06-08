@@ -259,11 +259,20 @@ button {
 }
 
 .button svg,
-.restaurant-info-panel button svg {
+.restaurant-info-panel button svg,
+.restaurant-menu-link svg {
   width: 21px;
   height: 21px;
   flex: none;
   fill: currentColor;
+}
+
+.restaurant-menu-link svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
 }
 
 .button-ghost {
@@ -943,21 +952,50 @@ main > section:not(.hero)::after {
   text-transform: uppercase;
 }
 
-.restaurant-info-panel button {
+.restaurant-panel-actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.restaurant-info-panel button,
+.restaurant-menu-link {
   display: inline-flex;
   min-height: 54px;
   align-items: center;
   justify-content: center;
   gap: 11px;
-  margin-top: 10px;
   padding: 14px 22px;
   border-radius: 4px;
-  background: var(--paper);
-  color: var(--ink);
-  border: 0;
   font-weight: 850;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.restaurant-info-panel button {
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.restaurant-menu-link {
+  border: 1px solid rgba(255, 250, 240, 0.44);
+  background: rgba(255, 250, 240, 0.04);
+  color: var(--paper);
+}
+
+.restaurant-info-panel button:hover,
+.restaurant-info-panel button:focus-visible,
+.restaurant-menu-link:hover,
+.restaurant-menu-link:focus-visible {
+  transform: translateY(-1px);
+}
+
+.restaurant-menu-link:hover,
+.restaurant-menu-link:focus-visible {
+  border-color: rgba(255, 250, 240, 0.88);
+  background: rgba(255, 250, 240, 0.12);
 }
 
 .restaurant-carousel {

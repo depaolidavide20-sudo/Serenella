@@ -220,6 +220,7 @@ function applyEnglishCopy() {
     [".beach-info-panel .whatsapp-cta", "Book your beach day"],
     [".service-booking .button", "Book your experience"],
     [".restaurant-info-panel button", "Book your table"],
+    [".restaurant-menu-link", "View the menu"],
     [".events-copy .button", "Plan your event"],
     [".review-cta", "Leave a review on Google"],
     [".contact-actions .button-primary", "Book now"],
