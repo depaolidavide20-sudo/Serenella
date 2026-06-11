@@ -8,6 +8,8 @@ const bookingForms = document.querySelectorAll("[data-booking-form]");
 const languageLinks = document.querySelectorAll("[data-lang-switch]");
 const root = document.documentElement;
 const hero = document.querySelector(".hero");
+const mobileCta = document.querySelector(".mobile-cta");
+const mobileHeroQuery = window.matchMedia("(max-width: 720px)");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const whatsappNumber = "393345037344";
 const originalTitle = document.title;
@@ -194,11 +196,10 @@ function applyEnglishCopy() {
     [".map-place-sea", "Gulf of Tigullio"],
     [".map-label strong", "Cavi di Lavagna, seafront"],
     [".map-label span", "Via Aurelia snc"],
-    [".footer-shell > .footer-column:nth-of-type(2) p", "Where we are"],
-    [".footer-shell > .footer-column:nth-of-type(2) a:last-child", "Open map"],
-    [".footer-shell > .footer-column:nth-of-type(3) p", "Contacts"],
-    [".footer-shell > .footer-column:nth-of-type(4) p", "Follow us"],
-    [".footer-bottom span:last-child", "© 2026 All rights reserved"],
+    [".footer-copy", "© 2026 Bagni Serenella · All rights reserved"],
+    [".footer-legal-links a:nth-of-type(1)", "Privacy Policy"],
+    [".footer-legal-links a:nth-of-type(2)", "Cookie Policy"],
+    [".footer-legal-links a:nth-of-type(3)", "Legal notes"],
     ["#beach-modal .eyebrow", "Beach reservation"],
     ["#beach-modal-title", "Book your day at the beach"],
     ["#service-modal .eyebrow", "Experience booking"],
@@ -208,8 +209,9 @@ function applyEnglishCopy() {
     ["#event-modal .eyebrow", "Event planning"],
     ["#event-modal-title", "Plan your seafront event"],
     [".contact-call", "Call now"],
-    [".mobile-cta a:first-child", "Call"],
-    [".mobile-cta a:last-child", "Book"],
+    [".mobile-cta-call", "Call"],
+    [".mobile-cta-book", "Book"],
+    [".mobile-cta-hero-book", "Choose your umbrella"],
   ].forEach(([selector, text]) => setFullText(selector, text));
 
   setAllFullText(".review-card figcaption strong", "Verified guest");
@@ -340,8 +342,19 @@ function syncHeader() {
   header?.classList.toggle("is-scrolled", window.scrollY > 10);
 }
 
+function syncMobileHeroCta() {
+  if (!hero || !mobileCta) {
+    return;
+  }
+
+  const heroBottom = hero.getBoundingClientRect().bottom;
+  const shouldShowHeroCta = mobileHeroQuery.matches && heroBottom > window.innerHeight * 0.42;
+  document.body.classList.toggle("hero-mobile-cta", shouldShowHeroCta);
+}
+
 function syncHero() {
   syncHeader();
+  syncMobileHeroCta();
 
   if (!hero || reduceMotion.matches) {
     return;
