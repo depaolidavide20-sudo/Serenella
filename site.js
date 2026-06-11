@@ -338,6 +338,46 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function scheduleIdleTask(callback, delay = 500) {
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(callback, { timeout: 1600 });
+    return;
+  }
+
+  window.setTimeout(callback, delay);
+}
+
+function preloadMobileImages() {
+  if (!mobileHeroQuery.matches) {
+    return;
+  }
+
+  const sources = [...document.querySelectorAll('picture source[media*="max-width: 720px"][srcset]')];
+  const urls = [...new Set(sources.map((source) => source.getAttribute("srcset")).filter(Boolean))];
+  let index = 0;
+  const parallelLoads = 2;
+
+  function preloadNext() {
+    const url = urls[index];
+    index += 1;
+
+    if (!url) {
+      return;
+    }
+
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = image.onerror = () => scheduleIdleTask(preloadNext, 80);
+    image.src = url;
+  }
+
+  scheduleIdleTask(() => {
+    for (let count = 0; count < parallelLoads; count += 1) {
+      preloadNext();
+    }
+  }, 900);
+}
+
 function syncHeader() {
   header?.classList.toggle("is-scrolled", window.scrollY > 10);
 }
@@ -385,6 +425,7 @@ function requestSync() {
 }
 
 syncHero();
+preloadMobileImages();
 window.addEventListener("scroll", requestSync, { passive: true });
 window.addEventListener("resize", requestSync);
 
@@ -479,6 +520,22 @@ carousels.forEach((carousel) => {
     }
   }
 
+  function loadSlideImages(fromIndex = activeIndex) {
+    const preloadWindow = Math.max(visibleSlides() + 2, 3);
+    const preloadUntil = Math.min(fromIndex + preloadWindow, slides.length);
+
+    for (let index = fromIndex; index < preloadUntil; index += 1) {
+      const image = slides[index]?.querySelector("img");
+
+      if (!image) {
+        continue;
+      }
+
+      image.loading = "eager";
+      image.decoding = "async";
+    }
+  }
+
   function normalizeIndex(index) {
     const limit = maxIndex();
 
@@ -501,6 +558,7 @@ carousels.forEach((carousel) => {
     }
 
     activeIndex = clamp(Math.round(viewport.scrollLeft / width), 0, maxIndex());
+    loadSlideImages();
     updateCounter();
   }
 
@@ -510,6 +568,7 @@ carousels.forEach((carousel) => {
     }
 
     activeIndex = normalizeIndex(index);
+    loadSlideImages();
     viewport.scrollTo({ left: slideWidth() * activeIndex, behavior: "smooth" });
     updateCounter();
   }
@@ -531,6 +590,7 @@ carousels.forEach((carousel) => {
     { passive: true }
   );
   window.addEventListener("resize", () => goTo(activeIndex));
+  loadSlideImages(0);
   updateCounter();
 });
 
