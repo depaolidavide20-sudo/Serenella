@@ -196,6 +196,7 @@ function applyEnglishCopy() {
     [".map-place-sea", "Gulf of Tigullio"],
     [".map-label strong", "Cavi di Lavagna, seafront"],
     [".map-label span", "Via Aurelia snc"],
+    [".map-open", "Open in Maps"],
     [".footer-copy", "© 2026 Bagni Serenella · All rights reserved"],
     [".footer-legal-links a:nth-of-type(1)", "Privacy Policy"],
     [".footer-legal-links a:nth-of-type(2)", "Cookie Policy"],
@@ -425,7 +426,6 @@ function requestSync() {
 }
 
 syncHero();
-preloadMobileImages();
 window.addEventListener("scroll", requestSync, { passive: true });
 window.addEventListener("resize", requestSync);
 
@@ -494,6 +494,10 @@ carousels.forEach((carousel) => {
   let activeIndex = 0;
   let scrollFrame = 0;
 
+  function activeSlides() {
+    return slides.filter((slide) => window.getComputedStyle(slide).display !== "none");
+  }
+
   function visibleSlides() {
     const mobileCount = Number(carousel.dataset.visibleMobile || 1);
     const desktopCount = Number(carousel.dataset.visibleDesktop || 3);
@@ -501,31 +505,34 @@ carousels.forEach((carousel) => {
   }
 
   function slideWidth() {
-    if (!slides[0]) {
+    const currentSlides = activeSlides();
+
+    if (!currentSlides[0]) {
       return 0;
     }
 
     const style = window.getComputedStyle(track || viewport);
     const gap = parseFloat(style.columnGap || style.gap || "0");
-    return slides[0].getBoundingClientRect().width + gap;
+    return currentSlides[0].getBoundingClientRect().width + gap;
   }
 
   function maxIndex() {
-    return Math.max(slides.length - visibleSlides(), 0);
+    return Math.max(activeSlides().length - visibleSlides(), 0);
   }
 
   function updateCounter() {
     if (counter) {
-      counter.textContent = `${activeIndex + 1} / ${slides.length}`;
+      counter.textContent = `${activeIndex + 1} / ${activeSlides().length}`;
     }
   }
 
   function loadSlideImages(fromIndex = activeIndex) {
+    const currentSlides = activeSlides();
     const preloadWindow = Math.max(visibleSlides() + 2, 3);
-    const preloadUntil = Math.min(fromIndex + preloadWindow, slides.length);
+    const preloadUntil = Math.min(fromIndex + preloadWindow, currentSlides.length);
 
     for (let index = fromIndex; index < preloadUntil; index += 1) {
-      const image = slides[index]?.querySelector("img");
+      const image = currentSlides[index]?.querySelector("img");
 
       if (!image) {
         continue;
@@ -563,7 +570,7 @@ carousels.forEach((carousel) => {
   }
 
   function goTo(index) {
-    if (!viewport || slides.length === 0) {
+    if (!viewport || activeSlides().length === 0) {
       return;
     }
 
