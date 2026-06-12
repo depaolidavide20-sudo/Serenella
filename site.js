@@ -210,9 +210,6 @@ function applyEnglishCopy() {
     ["#event-modal .eyebrow", "Event planning"],
     ["#event-modal-title", "Plan your seafront event"],
     [".contact-call", "Call now"],
-    [".mobile-cta-call", "Call"],
-    [".mobile-cta-book", "Book"],
-    [".mobile-cta-hero-book", "Choose your umbrella"],
   ].forEach(([selector, text]) => setFullText(selector, text));
 
   setAllFullText(".review-card figcaption strong", "Verified guest");
@@ -222,11 +219,14 @@ function applyEnglishCopy() {
     [".hero-actions .button", "Choose your umbrella"],
     [".beach-info-panel .whatsapp-cta", "Book your beach day"],
     [".service-booking .button", "Book your experience"],
-    [".restaurant-info-panel button", "Book your table"],
+    [".restaurant-info-panel button", "Book table"],
     [".restaurant-menu-link", "View the menu"],
     [".events-copy .button", "Plan your event"],
     [".review-cta", "Leave a review on Google"],
     [".contact-actions .button-primary", "Book now"],
+    [".mobile-cta-call", "Call"],
+    [".mobile-cta-book", "Book"],
+    [".mobile-cta-hero-book", "Choose your umbrella"],
   ].forEach(([selector, text]) => setInlineText(selector, text));
 
   [
@@ -348,19 +348,22 @@ function scheduleIdleTask(callback, delay = 500) {
   window.setTimeout(callback, delay);
 }
 
-function preloadMobileImages() {
-  if (!mobileHeroQuery.matches) {
-    return;
-  }
+function collectImageUrls() {
+  const urls = [];
 
-  const sources = [...document.querySelectorAll('picture source[media*="max-width: 720px"][srcset]')];
-  const urls = [...new Set(sources.map((source) => source.getAttribute("srcset")).filter(Boolean))];
-  let index = 0;
-  const parallelLoads = 2;
+  document.querySelectorAll("img[src]").forEach((image) => {
+    urls.push(image.currentSrc || image.getAttribute("src"));
+  });
+
+  return [...new Set(urls.filter(Boolean).map((url) => new URL(url, document.baseURI).href))];
+}
+
+function preloadSiteImages() {
+  const queue = collectImageUrls().filter((url) => !url.startsWith("data:"));
+  const parallelLoads = mobileHeroQuery.matches ? 5 : 8;
 
   function preloadNext() {
-    const url = urls[index];
-    index += 1;
+    const url = queue.shift();
 
     if (!url) {
       return;
@@ -368,7 +371,7 @@ function preloadMobileImages() {
 
     const image = new Image();
     image.decoding = "async";
-    image.onload = image.onerror = () => scheduleIdleTask(preloadNext, 80);
+    image.onload = image.onerror = preloadNext;
     image.src = url;
   }
 
@@ -376,7 +379,7 @@ function preloadMobileImages() {
     for (let count = 0; count < parallelLoads; count += 1) {
       preloadNext();
     }
-  }, 900);
+  }, 140);
 }
 
 function syncHeader() {
@@ -426,6 +429,7 @@ function requestSync() {
 }
 
 syncHero();
+preloadSiteImages();
 window.addEventListener("scroll", requestSync, { passive: true });
 window.addEventListener("resize", requestSync);
 
@@ -580,8 +584,14 @@ carousels.forEach((carousel) => {
     updateCounter();
   }
 
-  prevButton?.addEventListener("click", () => goTo(activeIndex - 1));
-  nextButton?.addEventListener("click", () => goTo(activeIndex + 1));
+  prevButton?.addEventListener("click", (event) => {
+    goTo(activeIndex - 1);
+    event.currentTarget.blur();
+  });
+  nextButton?.addEventListener("click", (event) => {
+    goTo(activeIndex + 1);
+    event.currentTarget.blur();
+  });
   viewport?.addEventListener(
     "scroll",
     () => {
