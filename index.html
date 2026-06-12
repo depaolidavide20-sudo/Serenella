@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="it">
+<html lang="it" class="notranslate" translate="no">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="google" content="notranslate" />
     <title>Bagni Serenella | Beach, food e cocktail a Cavi di Lavagna</title>
     <meta
       name="description"
@@ -17,8 +18,22 @@
     <meta property="og:image" content="assets/cover-desktop-opt.jpg" />
     <link rel="preload" as="image" href="assets/cover-mobile-opt.jpg" media="(max-width: 759px)" fetchpriority="high" />
     <link rel="preload" as="image" href="assets/cover-desktop-opt.jpg" media="(min-width: 760px)" fetchpriority="high" />
-    <link rel="stylesheet" href="site.css?v=20260612-premium-cta" />
-    <script defer src="site.js?v=20260612-premium-cta"></script>
+    <link rel="stylesheet" href="site.css?v=20260612-consent-images" />
+    <script defer src="site.js?v=20260612-consent-images"></script>
+    <script>
+      window.__serenellaImageFallback = function (image) {
+        var fallback = image.getAttribute("data-fallback-src");
+        var picture = image.closest ? image.closest("picture") : null;
+        if (!fallback) return;
+        if (picture) {
+          picture.querySelectorAll("source").forEach(function (source) {
+            source.remove();
+          });
+        }
+        image.onerror = null;
+        image.src = fallback;
+      };
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -71,7 +86,7 @@
         <a href="#contatti">Contatti</a>
       </nav>
 
-      <div class="header-actions language-switch" aria-label="Seleziona lingua">
+      <div class="header-actions language-switch notranslate" aria-label="Seleziona lingua" translate="no">
         <a class="is-active" href="#it" lang="it" aria-current="true" data-lang-switch="it">IT</a>
         <span aria-hidden="true">/</span>
         <a href="#en" lang="en" data-lang-switch="en">EN</a>
@@ -82,7 +97,7 @@
       <section class="hero" id="top" aria-label="Bagni Serenella">
         <picture class="hero-media">
           <source srcset="assets/cover-desktop-opt.jpg" media="(min-width: 760px)" />
-          <img loading="eager" decoding="async" fetchpriority="high" src="assets/cover-mobile-opt.jpg" alt="Tramonto sui Bagni Serenella a Cavi di Lavagna" />
+          <img loading="eager" decoding="async" fetchpriority="high" src="assets/cover-mobile-opt.jpg" data-fallback-src="assets/cover-mobile.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Tramonto sui Bagni Serenella a Cavi di Lavagna" />
         </picture>
         <div class="hero-overlay"></div>
 
@@ -115,7 +130,7 @@
 
             <source media="(max-width: 720px)" srcset="assets/beach-section-hero-new-mobile.jpg" />
 
-            <img loading="eager" decoding="async" src="assets/beach-section-hero-new-opt.jpg" alt="Terrazza dei Bagni Serenella affacciata sul mare" />
+            <img loading="eager" decoding="async" src="assets/beach-section-hero-new-opt.jpg" data-fallback-src="assets/beach-section-hero-new.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Terrazza dei Bagni Serenella affacciata sul mare" />
 
           </picture>
         </figure>
@@ -156,7 +171,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-twiga-01-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-twiga-01-opt.jpg" alt="Lettini e ombrelloni affacciati sul mare al tramonto" />
+                  <img loading="eager" decoding="async" src="assets/beach-twiga-01-opt.jpg" data-fallback-src="assets/beach-twiga-01.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Lettini e ombrelloni affacciati sul mare al tramonto" />
 
                 </picture>
               </figure>
@@ -165,7 +180,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-twiga-02-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-twiga-02-opt.jpg" alt="Ombrelloni ordinati sulla spiaggia dei Bagni Serenella" />
+                  <img loading="eager" decoding="async" src="assets/beach-twiga-02-opt.jpg" data-fallback-src="assets/beach-twiga-02.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Ombrelloni ordinati sulla spiaggia dei Bagni Serenella" />
 
                 </picture>
               </figure>
@@ -174,7 +189,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-carousel-terrace-sunset-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-carousel-terrace-sunset-opt.jpg" alt="Lettini e ombrellone sulla terrazza fronte mare al tramonto" />
+                  <img loading="eager" decoding="async" src="assets/beach-carousel-terrace-sunset-opt.jpg" data-fallback-src="assets/beach-carousel-terrace-sunset.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Lettini e ombrellone sulla terrazza fronte mare al tramonto" />
 
                 </picture>
               </figure>
@@ -183,7 +198,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-carousel-pergola-flowers-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-carousel-pergola-flowers-opt.jpg" alt="Pergolato fiorito e sedute vista mare ai Bagni Serenella" />
+                  <img loading="eager" decoding="async" src="assets/beach-carousel-pergola-flowers-opt.jpg" data-fallback-src="assets/beach-carousel-pergola-flowers.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Pergolato fiorito e sedute vista mare ai Bagni Serenella" />
 
                 </picture>
               </figure>
@@ -192,7 +207,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-twiga-04-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-twiga-04-opt.jpg" alt="Tavolo sulla terrazza sopra la spiaggia" />
+                  <img loading="eager" decoding="async" src="assets/beach-twiga-04-opt.jpg" data-fallback-src="assets/beach-twiga-04.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Tavolo sulla terrazza sopra la spiaggia" />
 
                 </picture>
               </figure>
@@ -201,7 +216,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-carousel-umbrellas-deck-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-carousel-umbrellas-deck-opt.jpg" alt="Ombrelloni e lettini sulla terrazza dei Bagni Serenella vista mare" />
+                  <img loading="eager" decoding="async" src="assets/beach-carousel-umbrellas-deck-opt.jpg" data-fallback-src="assets/beach-carousel-umbrellas-deck.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Ombrelloni e lettini sulla terrazza dei Bagni Serenella vista mare" />
 
                 </picture>
               </figure>
@@ -210,7 +225,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-twiga-03-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-twiga-03-opt.jpg" alt="Idromassaggio e area benessere vista mare" />
+                  <img loading="eager" decoding="async" src="assets/beach-twiga-03-opt.jpg" data-fallback-src="assets/beach-twiga-03.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Idromassaggio e area benessere vista mare" />
 
                 </picture>
               </figure>
@@ -219,7 +234,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-twiga-05-new-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-twiga-05-new-opt.jpg" alt="Spiaggia dei Bagni Serenella al tramonto con lettini e ombrelloni" />
+                  <img loading="eager" decoding="async" src="assets/beach-twiga-05-new-opt.jpg" data-fallback-src="assets/beach-twiga-05-new.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Spiaggia dei Bagni Serenella al tramonto con lettini e ombrelloni" />
 
                 </picture>
               </figure>
@@ -228,7 +243,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/beach-twiga-06-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/beach-twiga-06-opt.jpg" alt="Acqua limpida e scogli davanti a Cavi di Lavagna" />
+                  <img loading="eager" decoding="async" src="assets/beach-twiga-06-opt.jpg" data-fallback-src="assets/beach-twiga-06.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Acqua limpida e scogli davanti a Cavi di Lavagna" />
 
                 </picture>
               </figure>
@@ -259,7 +274,7 @@
 
                 <source media="(max-width: 720px)" srcset="assets/service-idromassaggio-mobile.jpg" />
 
-                <img loading="eager" decoding="async" src="assets/service-idromassaggio-opt.jpg" alt="Idromassaggio panoramico ai Bagni Serenella" />
+                <img loading="eager" decoding="async" src="assets/service-idromassaggio-opt.jpg" data-fallback-src="assets/service-idromassaggio.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Idromassaggio panoramico ai Bagni Serenella" />
 
               </picture>
             </figure>
@@ -271,7 +286,7 @@
 
                 <source media="(max-width: 720px)" srcset="assets/service-massaggi-mobile.jpg" />
 
-                <img loading="eager" decoding="async" src="assets/service-massaggi-opt.jpg" alt="Massaggio rilassante nell'area benessere dei Bagni Serenella" />
+                <img loading="eager" decoding="async" src="assets/service-massaggi-opt.jpg" data-fallback-src="assets/service-massaggi.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Massaggio rilassante nell'area benessere dei Bagni Serenella" />
 
               </picture>
             </figure>
@@ -283,7 +298,7 @@
 
                 <source media="(max-width: 720px)" srcset="assets/service-sup-mobile.jpg" />
 
-                <img loading="eager" decoding="async" src="assets/service-sup-opt.jpg" alt="SUP davanti alla costa ligure" />
+                <img loading="eager" decoding="async" src="assets/service-sup-opt.jpg" data-fallback-src="assets/service-sup.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="SUP davanti alla costa ligure" />
 
               </picture>
             </figure>
@@ -295,7 +310,7 @@
 
                 <source media="(max-width: 720px)" srcset="assets/service-yoga-mobile.jpg" />
 
-                <img loading="eager" decoding="async" src="assets/service-yoga-opt.jpg" alt="Lezione di yoga sulla spiaggia al tramonto" />
+                <img loading="eager" decoding="async" src="assets/service-yoga-opt.jpg" data-fallback-src="assets/service-yoga.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Lezione di yoga sulla spiaggia al tramonto" />
 
               </picture>
             </figure>
@@ -320,7 +335,7 @@
 
               <source media="(max-width: 720px)" srcset="assets/restaurant-new-01-mobile.jpg" />
 
-              <img loading="eager" decoding="async" src="assets/restaurant-new-01-opt.jpg" alt="Tavolo apparecchiato con vista mare al ristorante Bagni Serenella" />
+              <img loading="eager" decoding="async" src="assets/restaurant-new-01-opt.jpg" data-fallback-src="assets/restaurant-new-01.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Tavolo apparecchiato con vista mare al ristorante Bagni Serenella" />
 
             </picture>
           </figure>
@@ -368,7 +383,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-carousel-jun8-01-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-01-opt.jpg" alt="Interno del ristorante Bagni Serenella con pavimento in legno e dettagli nautici" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-01-opt.jpg" data-fallback-src="assets/restaurant-carousel-jun8-01.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Interno del ristorante Bagni Serenella con pavimento in legno e dettagli nautici" />
 
                 </picture>
               </figure>
@@ -377,7 +392,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-carousel-jun8-03-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-03-opt.jpg" alt="Tavolo al tramonto con vista mare dal ristorante Bagni Serenella" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-03-opt.jpg" data-fallback-src="assets/restaurant-carousel-jun8-03.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Tavolo al tramonto con vista mare dal ristorante Bagni Serenella" />
 
                 </picture>
               </figure>
@@ -386,7 +401,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-carousel-jun8-04-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-04-opt.jpg" alt="Sala del ristorante Bagni Serenella illuminata dal tramonto con tavoli vista mare" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-04-opt.jpg" data-fallback-src="assets/restaurant-carousel-jun8-04.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Sala del ristorante Bagni Serenella illuminata dal tramonto con tavoli vista mare" />
 
                 </picture>
               </figure>
@@ -395,7 +410,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-carousel-01-new-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-01-new-opt.jpg" alt="Sala ristorante Bagni Serenella con tavoli vista mare" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-01-new-opt.jpg" data-fallback-src="assets/restaurant-carousel-01-new.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Sala ristorante Bagni Serenella con tavoli vista mare" />
 
                 </picture>
               </figure>
@@ -404,7 +419,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-carousel-jun8-02-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-02-opt.jpg" alt="Tavolo apparecchiato vicino alle finestre con vista mare" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-carousel-jun8-02-opt.jpg" data-fallback-src="assets/restaurant-carousel-jun8-02.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Tavolo apparecchiato vicino alle finestre con vista mare" />
 
                 </picture>
               </figure>
@@ -413,7 +428,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-new-05-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-new-05-opt.jpg" alt="Ingresso e vetrate del ristorante affacciate sul mare" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-new-05-opt.jpg" data-fallback-src="assets/restaurant-new-05.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Ingresso e vetrate del ristorante affacciate sul mare" />
 
                 </picture>
               </figure>
@@ -422,7 +437,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-food-jun10-01-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-food-jun10-01-opt.jpg" alt="Spaghetti alle vongole serviti su tavolo bianco vista mare" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-food-jun10-01-opt.jpg" data-fallback-src="assets/restaurant-food-jun10-01.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Spaghetti alle vongole serviti su tavolo bianco vista mare" />
 
                 </picture>
               </figure>
@@ -431,7 +446,34 @@
 
                   <source media="(max-width: 720px)" srcset="assets/restaurant-food-jun10-02-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/restaurant-food-jun10-02-opt.jpg" alt="Pasta al pomodoro e pesce servita su piatto azzurro" />
+                  <img loading="eager" decoding="async" src="assets/restaurant-food-jun10-02-opt.jpg" data-fallback-src="assets/restaurant-food-jun10-02.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Pasta al pomodoro e pesce servita su piatto azzurro" />
+
+                </picture>
+              </figure>
+              <figure class="restaurant-card" data-carousel-card>
+                <picture>
+
+                  <source media="(max-width: 720px)" srcset="assets/restaurant-food-jun12-01-mobile.jpg" />
+
+                  <img loading="eager" decoding="async" src="assets/restaurant-food-jun12-01-opt.jpg" alt="Fritto di mare servito su tavolo bianco al ristorante Bagni Serenella" />
+
+                </picture>
+              </figure>
+              <figure class="restaurant-card" data-carousel-card>
+                <picture>
+
+                  <source media="(max-width: 720px)" srcset="assets/restaurant-food-jun12-02-mobile.jpg" />
+
+                  <img loading="eager" decoding="async" src="assets/restaurant-food-jun12-02-opt.jpg" alt="Insalata fresca con cialda croccante servita vista mare" />
+
+                </picture>
+              </figure>
+              <figure class="restaurant-card" data-carousel-card>
+                <picture>
+
+                  <source media="(max-width: 720px)" srcset="assets/restaurant-food-jun12-03-mobile.jpg" />
+
+                  <img loading="eager" decoding="async" src="assets/restaurant-food-jun12-03-opt.jpg" alt="Linguine ai sapori di mare su piatto azzurro" />
 
                 </picture>
               </figure>
@@ -480,7 +522,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/event-carousel-jun8-01-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-01-opt.jpg" alt="Servizio elegante durante un evento serale vista mare" />
+                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-01-opt.jpg" data-fallback-src="assets/event-carousel-jun8-01.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Servizio elegante durante un evento serale vista mare" />
 
                 </picture>
               </figure>
@@ -489,7 +531,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/event-carousel-jun8-03-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-03-opt.jpg" alt="Sala ristorante allestita per una serata privata elegante" />
+                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-03-opt.jpg" data-fallback-src="assets/event-carousel-jun8-03.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Sala ristorante allestita per una serata privata elegante" />
 
                 </picture>
               </figure>
@@ -498,7 +540,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/event-carousel-jun8-04-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-04-opt.jpg" alt="Tavolata lunga apparecchiata per evento serale" />
+                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-04-opt.jpg" data-fallback-src="assets/event-carousel-jun8-04.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Tavolata lunga apparecchiata per evento serale" />
 
                 </picture>
               </figure>
@@ -507,7 +549,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/event-carousel-jun8-05-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-05-opt.jpg" alt="Tavoli con fiori e vista mare per evento al tramonto" />
+                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-05-opt.jpg" data-fallback-src="assets/event-carousel-jun8-05.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Tavoli con fiori e vista mare per evento al tramonto" />
 
                 </picture>
               </figure>
@@ -516,7 +558,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/event-carousel-jun8-02-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-02-opt.jpg" alt="Mise en place elegante con decorazione rossa e vista mare" />
+                  <img loading="eager" decoding="async" src="assets/event-carousel-jun8-02-opt.jpg" data-fallback-src="assets/event-carousel-jun8-02.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Mise en place elegante con decorazione rossa e vista mare" />
 
                 </picture>
               </figure>
@@ -525,7 +567,7 @@
 
                   <source media="(max-width: 720px)" srcset="assets/event-new-01-mobile.jpg" />
 
-                  <img loading="eager" decoding="async" src="assets/event-new-01-opt.jpg" alt="Sala ristorante allestita per eventi serali vista mare" />
+                  <img loading="eager" decoding="async" src="assets/event-new-01-opt.jpg" data-fallback-src="assets/event-new-01.png" onerror="window.__serenellaImageFallback && window.__serenellaImageFallback(this)" alt="Sala ristorante allestita per eventi serali vista mare" />
 
                 </picture>
               </figure>
@@ -577,6 +619,7 @@
               </figcaption>
             </figure>
           </div>
+          <p class="review-swipe-hint" aria-hidden="true">Scorri con il dito per leggere le recensioni</p>
           <a
             class="review-cta"
             href="https://www.google.com/search?sca_esv=e4967f2aa746cbdf&amp;rlz=1C5CHFA_enIT984IT984&amp;sxsrf=ANbL-n7ASActNcXl7YQt55Fu-qMumJpyPw:1779347546675&amp;si=AL3DRZHrmvnFAVQPOO2Bzhf8AX9KZZ6raUI_dT7DG_z0kV2_x_y2ppG8yhsEoyc7vaivwfjuCLT_0pHL6knGpGnyeeX6-L3JJmLtvPWi_tMAQadqa6Xs3kZn578pLXKhj7PCdi4Ql5JyI8PPinu9yuUVNfgBISyJgQ%3D%3D&amp;q=Bagni+Serenella+Recensioni&amp;sa=X&amp;ved=2ahUKEwiZhc6T6smUAxXMiP0HHZ8EE_8Q0bkNegQIRxAH&amp;biw=1440&amp;bih=812&amp;dpr=2"
@@ -660,10 +703,24 @@
             <iframe
               class="map-embed"
               title="Mappa Bagni Serenella a Cavi di Lavagna"
-              src="https://www.google.com/maps?q=Bagni%20Serenella%20Via%20Aurelia%20snc%20Cavi%20di%20Lavagna&amp;output=embed"
-              loading="lazy"
+              data-src="https://www.google.com/maps?q=Bagni%20Serenella%20Via%20Aurelia%20snc%20Cavi%20di%20Lavagna&amp;output=embed"
+              loading="eager"
               referrerpolicy="no-referrer-when-downgrade"
+              data-map-iframe
             ></iframe>
+            <div class="map-consent" data-map-consent>
+              <p>
+                Google Maps viene caricato solo con il tuo consenso. La scelta viene ricordata per 6 mesi.
+              </p>
+              <button class="button button-primary" type="button" data-map-accept>Accetta e visualizza la mappa</button>
+              <a
+                href="https://www.google.com/maps/search/?api=1&amp;query=Bagni%20Serenella%20Via%20Aurelia%20snc%20Cavi%20di%20Lavagna"
+                target="_blank"
+                rel="noopener"
+              >
+                Apri direttamente su Google Maps
+              </a>
+            </div>
             <a
               class="map-hit"
               href="https://www.google.com/maps/search/?api=1&amp;query=Bagni%20Serenella%20Via%20Aurelia%20snc%20Cavi%20di%20Lavagna"
@@ -726,6 +783,13 @@
             Note
             <textarea name="notes" rows="3"></textarea>
           </label>
+          <label class="privacy-consent">
+            <input name="privacyConsent" type="checkbox" required />
+            <span class="privacy-consent-copy">
+              Dichiaro di aver letto l'informativa privacy e di aver compreso che la richiesta verrà inviata tramite WhatsApp solo su mia azione volontaria.
+              <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+            </span>
+          </label>
           <button class="button button-primary" type="submit">Invia richiesta su WhatsApp</button>
         </form>
       </div>
@@ -770,6 +834,13 @@
           <label>
             Note
             <textarea name="notes" rows="3"></textarea>
+          </label>
+          <label class="privacy-consent">
+            <input name="privacyConsent" type="checkbox" required />
+            <span class="privacy-consent-copy">
+              Dichiaro di aver letto l'informativa privacy e di aver compreso che la richiesta verrà inviata tramite WhatsApp solo su mia azione volontaria.
+              <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+            </span>
           </label>
           <button class="button button-primary" type="submit">Invia richiesta su WhatsApp</button>
         </form>
@@ -817,6 +888,13 @@
           <label>
             Note
             <textarea name="notes" rows="3"></textarea>
+          </label>
+          <label class="privacy-consent">
+            <input name="privacyConsent" type="checkbox" required />
+            <span class="privacy-consent-copy">
+              Dichiaro di aver letto l'informativa privacy e di aver compreso che la richiesta verrà inviata tramite WhatsApp solo su mia azione volontaria.
+              <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+            </span>
           </label>
           <button class="button button-primary" type="submit">Invia richiesta su WhatsApp</button>
         </form>
@@ -867,6 +945,13 @@
           <label>
             Desideri e note
             <textarea name="notes" rows="3" placeholder="Raccontaci cosa hai in mente"></textarea>
+          </label>
+          <label class="privacy-consent">
+            <input name="privacyConsent" type="checkbox" required />
+            <span class="privacy-consent-copy">
+              Dichiaro di aver letto l'informativa privacy e di aver compreso che la richiesta verrà inviata tramite WhatsApp solo su mia azione volontaria.
+              <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+            </span>
           </label>
           <button class="button button-primary" type="submit">Invia richiesta su WhatsApp</button>
         </form>

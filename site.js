@@ -12,6 +12,11 @@ const mobileCta = document.querySelector(".mobile-cta");
 const mobileHeroQuery = window.matchMedia("(max-width: 720px)");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const whatsappNumber = "393345037344";
+const mapIframe = document.querySelector("[data-map-iframe]");
+const mapConsent = document.querySelector("[data-map-consent]");
+const mapAccept = document.querySelector("[data-map-accept]");
+const mapConsentKey = "serenellaGoogleMapsConsent";
+const mapConsentDuration = 1000 * 60 * 60 * 24 * 183;
 const originalTitle = document.title;
 const metaDescription = document.querySelector('meta[name="description"]');
 const originalDescription = metaDescription?.getAttribute("content") || "";
@@ -182,6 +187,7 @@ function applyEnglishCopy() {
     [".review-card:nth-child(1) blockquote", "\"A very beautiful beach club, kind staff and an excellent sea-view restaurant.\""],
     [".review-card:nth-child(2) blockquote", "\"Always orderly, clean and renewed. A certainty in Cavi di Lavagna.\""],
     [".review-card:nth-child(3) blockquote", "\"Courtesy, cleanliness and good bar and restaurant service. The view does the rest.\""],
+    [".review-swipe-hint", "Swipe to read the reviews"],
     [".review-note", "It only takes 10 seconds"],
     [".contact-pill", "Contacts"],
     [".contact-card h2", "Come visit us."],
@@ -197,6 +203,9 @@ function applyEnglishCopy() {
     [".map-label strong", "Cavi di Lavagna, seafront"],
     [".map-label span", "Via Aurelia snc"],
     [".map-open", "Open in Maps"],
+    [".map-consent p", "Google Maps loads only with your consent. Your choice is remembered for 6 months."],
+    ["[data-map-accept]", "Accept and view the map"],
+    [".map-consent a", "Open directly in Google Maps"],
     [".footer-copy", "© 2026 Bagni Serenella · All rights reserved"],
     [".footer-legal-links a:nth-of-type(1)", "Privacy Policy"],
     [".footer-legal-links a:nth-of-type(2)", "Cookie Policy"],
@@ -214,6 +223,11 @@ function applyEnglishCopy() {
 
   setAllFullText(".review-card figcaption strong", "Verified guest");
   setAllFullText(".review-card figcaption span", "Online review");
+  document.querySelectorAll(".privacy-consent-copy").forEach((element) => {
+    rememberHtml(element);
+    element.innerHTML =
+      'I confirm that I have read the privacy notice and understand that the request will be sent via WhatsApp only through my voluntary action. <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>';
+  });
 
   [
     [".hero-actions .button", "Choose your umbrella"],
@@ -375,11 +389,54 @@ function preloadSiteImages() {
     image.src = url;
   }
 
-  scheduleIdleTask(() => {
-    for (let count = 0; count < parallelLoads; count += 1) {
-      preloadNext();
-    }
-  }, 140);
+  for (let count = 0; count < parallelLoads; count += 1) {
+    preloadNext();
+  }
+}
+
+function readMapConsent() {
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(mapConsentKey) || "null");
+    return Boolean(stored?.accepted && Date.now() - stored.timestamp < mapConsentDuration);
+  } catch (error) {
+    return false;
+  }
+}
+
+function storeMapConsent() {
+  try {
+    window.localStorage.setItem(mapConsentKey, JSON.stringify({ accepted: true, timestamp: Date.now() }));
+  } catch (error) {
+    // The map still loads for this session if storage is unavailable.
+  }
+}
+
+function loadGoogleMap() {
+  if (!mapIframe) {
+    return;
+  }
+
+  const source = mapIframe.dataset.src;
+  if (source && !mapIframe.getAttribute("src")) {
+    mapIframe.setAttribute("src", source);
+  }
+
+  if (mapConsent) {
+    mapConsent.hidden = true;
+  }
+}
+
+if (readMapConsent()) {
+  loadGoogleMap();
+}
+
+mapAccept?.addEventListener("click", () => {
+  storeMapConsent();
+  loadGoogleMap();
+});
+
+if (mapConsent && !readMapConsent()) {
+  mapConsent.hidden = false;
 }
 
 function syncHeader() {
@@ -672,6 +729,10 @@ bookingForms.forEach((form) => {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
+    }
 
     if (requiredGroup) {
       const hasSelection = Boolean(requiredGroup.querySelector("input:checked"));
