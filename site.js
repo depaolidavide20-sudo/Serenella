@@ -239,7 +239,6 @@ function applyEnglishCopy() {
     [".review-cta", "Leave a review on Google"],
     [".contact-actions .button-primary", "Book now"],
     [".mobile-cta-call", "Call"],
-    [".mobile-cta-book", "Book"],
     [".mobile-cta-hero-book", "Choose your umbrella"],
   ].forEach(([selector, text]) => setInlineText(selector, text));
 
@@ -254,7 +253,7 @@ function applyEnglishCopy() {
     ["#service-modal .booking-form > label:nth-of-type(2)", "Phone"],
     ["#service-modal .form-row label:nth-child(1)", "Date"],
     ["#service-modal .form-row label:nth-child(2)", "People"],
-    ["#service-modal .service-options legend", "Choose one or more services"],
+    ["#service-modal .service-options legend", "Available services"],
     ["#service-modal .booking-form > label:nth-of-type(3)", "Preferred time"],
     ["#service-modal .booking-form > label:nth-of-type(4)", "Notes"],
     ["#restaurant-modal .booking-form > label:nth-of-type(1)", "Full name"],
@@ -273,7 +272,7 @@ function applyEnglishCopy() {
     ["#event-modal .booking-form > label:nth-of-type(5)", "Wishes and notes"],
   ].forEach(([selector, text]) => setInlineText(selector, text));
 
-  setAllInlineText("#service-modal .service-options label", [
+  setAllInlineText("#service-modal .service-options label span", [
     "Sea-view hot tub",
     "Massages and treatments",
     "SUP and kayak",
