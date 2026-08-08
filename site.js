@@ -352,47 +352,6 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-function scheduleIdleTask(callback, delay = 500) {
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(callback, { timeout: 1600 });
-    return;
-  }
-
-  window.setTimeout(callback, delay);
-}
-
-function collectImageUrls() {
-  const urls = [];
-
-  document.querySelectorAll("img[src]").forEach((image) => {
-    urls.push(image.currentSrc || image.getAttribute("src"));
-  });
-
-  return [...new Set(urls.filter(Boolean).map((url) => new URL(url, document.baseURI).href))];
-}
-
-function preloadSiteImages() {
-  const queue = collectImageUrls().filter((url) => !url.startsWith("data:"));
-  const parallelLoads = mobileHeroQuery.matches ? 5 : 8;
-
-  function preloadNext() {
-    const url = queue.shift();
-
-    if (!url) {
-      return;
-    }
-
-    const image = new Image();
-    image.decoding = "async";
-    image.onload = image.onerror = preloadNext;
-    image.src = url;
-  }
-
-  for (let count = 0; count < parallelLoads; count += 1) {
-    preloadNext();
-  }
-}
-
 function readMapConsent() {
   try {
     const stored = JSON.parse(window.localStorage.getItem(mapConsentKey) || "null");
@@ -485,7 +444,6 @@ function requestSync() {
 }
 
 syncHero();
-preloadSiteImages();
 window.addEventListener("scroll", requestSync, { passive: true });
 window.addEventListener("resize", requestSync);
 
@@ -544,6 +502,27 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
+function loadDeferredPictureImage(image) {
+  const picture = image.closest("picture");
+
+  picture?.querySelectorAll("source[data-srcset]").forEach((source) => {
+    source.setAttribute("srcset", source.dataset.srcset);
+    source.removeAttribute("data-srcset");
+  });
+
+  if (image.dataset.srcset) {
+    image.setAttribute("srcset", image.dataset.srcset);
+    image.removeAttribute("data-srcset");
+  }
+
+  if (image.dataset.src) {
+    image.setAttribute("src", image.dataset.src);
+    image.removeAttribute("data-src");
+  }
+
+  image.decoding = "async";
+}
+
 carousels.forEach((carousel) => {
   const viewport = carousel.querySelector("[data-carousel-viewport]");
   const track = carousel.querySelector("[data-carousel-track]");
@@ -588,18 +567,18 @@ carousels.forEach((carousel) => {
 
   function loadSlideImages(fromIndex = activeIndex) {
     const currentSlides = activeSlides();
-    const preloadWindow = Math.max(visibleSlides() + 2, 3);
-    const preloadUntil = Math.min(fromIndex + preloadWindow, currentSlides.length);
+    const visibleCount = visibleSlides();
+    const preloadFrom = Math.max(fromIndex - 1, 0);
+    const preloadUntil = Math.min(fromIndex + visibleCount + 1, currentSlides.length);
 
-    for (let index = fromIndex; index < preloadUntil; index += 1) {
+    for (let index = preloadFrom; index < preloadUntil; index += 1) {
       const image = currentSlides[index]?.querySelector("img");
 
       if (!image) {
         continue;
       }
 
-      image.loading = "eager";
-      image.decoding = "async";
+      loadDeferredPictureImage(image);
     }
   }
 
