@@ -1,1 +1,10 @@
+preview-*.png
+asset-optimization-report.json
+asset-optimization-report.md
 
+assets/*.jpg
+assets/*.png
+!assets/event-ceremony-blue.png
+
+.DS_Store
+assets/.DS_Store
